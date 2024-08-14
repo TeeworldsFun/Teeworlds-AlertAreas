@@ -197,15 +197,9 @@ void CCharacter::AddGrenades(int Num)
 	char aBuf[256];
 
 	if (G == m_Grenades)
-	{
-		str_format(aBuf, sizeof(aBuf), "Full grenades (%d)", m_Grenades);
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-	}
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), _("Full grenades ({%d})"), m_Grenades);
 	else
-	{
-		str_format(aBuf, sizeof(aBuf), "You gained %d grenades (%d/%d grenades)", G, m_Grenades, MAX_GRENADES);
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-	}
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), _("You gained {%d} grenades ({%d}/{%d} grenades)"), G, m_Grenades, MAX_GRENADES);
 }
 
 void CCharacter::ThrowGrenade(float Angle)
@@ -259,14 +253,10 @@ void CCharacter::ThrowGrenade(float Angle)
 
 	if (m_Grenades == 1)
 	{
-		str_format(aBuf, sizeof(aBuf), "%d grenade left", m_Grenades);
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), _("{%d} grenade left"), m_Grenades);
 	}
 	else
-	{
-		str_format(aBuf, sizeof(aBuf), "%d grenades left", m_Grenades);
-		GameServer()->SendChatTarget(m_pPlayer->GetCID(), aBuf);
-	}
+		GameServer()->SendChatTarget(m_pPlayer->GetCID(), _("{%d} grenades left"), m_Grenades);
 }
 
 void CCharacter::Teleport(vec2 Pos)
@@ -311,7 +301,7 @@ void CCharacter::SetCustomWeapon(int CustomWeapon)
 		m_ClipReloadTimer = 0;
 
 	if (!m_IsBot && GetPlayer()->m_EnableWeaponInfo == 1)
-		GameServer()->SendChatTarget(GetPlayer()->GetCID(), _("Using: %s"), Server()->Localization()->Localize(GetPlayer()->m_Language, aCustomWeapon[CustomWeapon].m_Name));
+		GameServer()->SendChatTarget(GetPlayer()->GetCID(), _("Using: {%s}"), Server()->Localization()->Localize(GetPlayer()->m_Language, aCustomWeapon[CustomWeapon].m_Name));
 
 	if (!m_IsBot && GetPlayer()->m_EnableWeaponInfo == 2 && GameServer()->m_BroadcastLockTick < Server()->Tick())
 		GameServer()->SendBroadcast(_("Using: {%s}"), GetPlayer()->GetCID(), false, Server()->Localization()->Localize(GetPlayer()->m_Language, aCustomWeapon[CustomWeapon].m_Name));
@@ -700,18 +690,22 @@ void CCharacter::FireWeapon()
 		return;
 
 	// check for ammo
-	if (m_aWeapon[m_ActiveCustomWeapon].m_Ammo <= 0 && aCustomWeapon[m_ActiveCustomWeapon].m_ClipSize > 0)
+	if (!GetPlayer()->m_IsBot)
 	{
-		// 125ms is a magical limit of how fast a human can click
-		m_ReloadTimer = 125 * Server()->TickSpeed() / 1000;
-		if (m_LastNoAmmoSound + Server()->TickSpeed() <= Server()->Tick())
+		if (m_aWeapon[m_ActiveCustomWeapon].m_Ammo <= 0 && aCustomWeapon[m_ActiveCustomWeapon].m_ClipSize > 0)
 		{
-			GameServer()->CreateSound(m_Pos, SOUND_WEAPON_NOAMMO);
-			m_LastNoAmmoSound = Server()->Tick();
+			// 125ms is a magical limit of how fast a human can click
+			m_ReloadTimer = 125 * Server()->TickSpeed() / 1000;
+			if (m_LastNoAmmoSound + Server()->TickSpeed() <= Server()->Tick())
+			{
+				GameServer()->CreateSound(m_Pos, SOUND_WEAPON_NOAMMO);
+				m_LastNoAmmoSound = Server()->Tick();
+			}
+			return;
 		}
-
-		return;
 	}
+	else
+		m_aWeapon[m_ActiveCustomWeapon].m_Ammo++;
 
 	// weapon knockback to self
 	// m_Core.m_Vel -= Direction * aCustomWeapon[m_ActiveCustomWeapon].m_SelfKnockback;
@@ -1255,7 +1249,7 @@ void CCharacter::GiveStartWeapon()
 				m_aWeapon[i].m_Ammo = pData->m_aWeaponAmmo[i];
 				m_aWeapon[i].m_AmmoReserved = pData->m_aWeaponAmmoReserved[i];
 			}
-			
+
 			if (m_aWeapon[i].m_Got)
 				GotItems = true;
 		}

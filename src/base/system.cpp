@@ -948,6 +948,8 @@ int net_socket_type(NETSOCKET sock)
 	return sock->type;
 }
 
+static NETSOCKET_INTERNAL invalid_socket = {NETTYPE_INVALID, -1, -1, -1};
+
 NETSOCKET net_udp_create(NETADDR bindaddr, int use_random_port)
 {NETSOCKET sock = (NETSOCKET_INTERNAL *)malloc(sizeof(*sock));
 	*sock = invalid_socket;

@@ -869,7 +869,7 @@ void CServer::SendCapabilities(int ClientID)
 {
 	CMsgPacker Msg(NETMSG_CAPABILITIES, true);
 	Msg.AddInt(SERVERCAP_CURVERSION); // version
-	Msg.AddInt(SERVERCAPFLAG_DDNET | SERVERCAPFLAG_CHATTIMEOUTCODE | SERVERCAPFLAG_ANYPLAYERFLAG | SERVERCAPFLAG_PINGEX | SERVERCAPFLAG_SYNCWEAPONINPUT); // flags
+	Msg.AddInt(SERVERCAPFLAG_DDNET | SERVERCAPFLAG_ANYPLAYERFLAG | SERVERCAPFLAG_PINGEX | SERVERCAPFLAG_SYNCWEAPONINPUT | SERVERCAPFLAG_CHATTIMEOUTCODE); // flags
 	SendMsg(&Msg, MSGFLAG_VITAL, ClientID);
 }
 
@@ -1318,7 +1318,7 @@ void CServer::CacheServerInfo(CCache *pCache, int Type, bool SendClients)
 
 	// count the players
 	int PlayerCount = 0, ClientCount = 0;
-	for(int i = 0; i < MAX_CLIENTS; i++)
+	for(int i = 0; i < MAX_PLAYERS; i++)
 	{
 		if(m_aClients[i].m_State != CClient::STATE_EMPTY)
 		{
@@ -1346,9 +1346,9 @@ void CServer::CacheServerInfo(CCache *pCache, int Type, bool SendClients)
 	}
 	else
 	{
-		if(m_NetServer.MaxClients() <= MAX_CLIENTS)
+		if(m_NetServer.MaxClients() <= MAX_PLAYERS)
 		{
-	p.AddString(g_Config.m_SvName, 64);
+			p.AddString(g_Config.m_SvName, 64);
 		}
 		else
 		{
@@ -1374,17 +1374,17 @@ void CServer::CacheServerInfo(CCache *pCache, int Type, bool SendClients)
 	int MaxClients = m_NetServer.MaxClients();
 	// How many clients the used serverinfo protocol supports, has to be tracked
 	// separately to make sure we don't subtract the reserved slots from it
-	int MaxClientsProtocol = MAX_CLIENTS;
+	int MaxClientsProtocol = MAX_PLAYERS;
 	if(Type == SERVERINFO_VANILLA || Type == SERVERINFO_INGAME)
 	{
-		if(ClientCount >= MAX_CLIENTS)
+		if(ClientCount >= MAX_PLAYERS)
 		{
 			if(ClientCount < MaxClients)
-				ClientCount = MAX_CLIENTS - 1;
+				ClientCount = MAX_PLAYERS - 1;
 			else
-				ClientCount = MAX_CLIENTS;
+				ClientCount = MAX_PLAYERS;
 		}
-		MaxClientsProtocol = MAX_CLIENTS;
+		MaxClientsProtocol = MAX_PLAYERS;
 		if(PlayerCount > ClientCount)
 			PlayerCount = ClientCount;
 	}
@@ -1764,7 +1764,6 @@ void CServer::PumpNetwork(bool PacketWaiting)
 	}
 	{
 		unsigned char aBuffer[NET_MAX_PAYLOAD];
-		int Flags;
 		mem_zero(&Packet, sizeof(Packet));
 		Packet.m_pData = aBuffer;
 	}
@@ -2376,7 +2375,7 @@ int main(int argc, const char **argv) // ignore_convention
 void CServer::AddZombie()
 {
 	int ClientID = -1;
-	for (int i = 0; i < MAX_CLIENTS; i++)
+	for (int i = MAX_CLIENTS - 1; i > 0; i--)
 	{
 		if (m_aClients[i].m_State == CClient::STATE_EMPTY)
 		{
@@ -2393,7 +2392,7 @@ void CServer::AddZombie()
 	
 	m_aClients[ClientID].m_State = CClient::STATE_CONNECTING;
 	GameServer()->OnClientConnected(ClientID, true);
-	//GameServer()->OnClientEnter(i);
+	//GameServer()->OnClientEnter(i);	
 	m_aClients[ClientID].m_State = CClient::STATE_INGAME;
 	m_aClients[ClientID].m_Bot = true;
 

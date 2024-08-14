@@ -366,10 +366,9 @@ void CPlayer::OnDisconnect(const char *pReason)
 		if (!m_IsBot)
 		{
 			if(pReason && *pReason)
-				str_format(aBuf, sizeof(aBuf), "'%s' has left the game (%s)", Server()->ClientName(m_ClientID), pReason);
+				GameServer()->SendChatTarget(-1, _("'{%s}' has left the game ({%s})"), Server()->ClientName(m_ClientID), pReason);
 			else
-				str_format(aBuf, sizeof(aBuf), "'%s' has left the game", Server()->ClientName(m_ClientID));
-			GameServer()->SendChatTarget(-1, aBuf);
+				GameServer()->SendChatTarget(-1, _("'{%s}' has left the game"), Server()->ClientName(m_ClientID));
 		}
 
 		str_format(aBuf, sizeof(aBuf), "leave player='%d:%s'", m_ClientID, Server()->ClientName(m_ClientID));
@@ -765,9 +764,7 @@ bool CPlayer::BuyWeapon(int CustomWeapon)
 	
 	if (GotWeapon(CustomWeapon))
 	{
-		char aBuf[256];
-		str_format(aBuf, sizeof(aBuf), "You already have  %s", aCustomWeapon[CustomWeapon].m_Name);
-		GameServer()->SendChatTarget(GetCID(), aBuf);
+		GameServer()->SendChatTarget(GetCID(), _("You already have {%s}"), aCustomWeapon[CustomWeapon].m_Name);
 		return false;
 	}
 	
@@ -775,9 +772,7 @@ bool CPlayer::BuyWeapon(int CustomWeapon)
 	
 	if (m_Money < Cost)
 	{
-		char aBuf[256];
-		str_format(aBuf, sizeof(aBuf), "Not enough money for %s", aCustomWeapon[CustomWeapon].m_Name);
-		GameServer()->SendChatTarget(GetCID(), aBuf);
+		GameServer()->SendChatTarget(GetCID(), _("Not enough money for {%s}"), aCustomWeapon[CustomWeapon].m_Name);
 		return false;
 	}
 	
@@ -785,11 +780,7 @@ bool CPlayer::BuyWeapon(int CustomWeapon)
 	m_Money -= Cost;
 
 	if (CustomWeapon != HAMMER_BASIC)
-	{
-		char aBuf[256];
-		str_format(aBuf, sizeof(aBuf), "%s ready for action", aCustomWeapon[CustomWeapon].m_Name);
-		GameServer()->SendChatTarget(GetCID(), aBuf);
-	}
+		GameServer()->SendChatTarget(GetCID(), _("%s ready for action"), aCustomWeapon[CustomWeapon].m_Name);
 	
 	GameServer()->ResetVotes();
 	

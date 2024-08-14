@@ -9,5 +9,6 @@
         "sstream": "cpp",
         "regex": "cpp",
         "cmath": "cpp"
-    }
+    },
+    "C_Cpp.default.compilerPath": "/usr/bin/g++"
 }

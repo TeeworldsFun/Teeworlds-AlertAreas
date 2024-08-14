@@ -599,7 +599,6 @@ struct NETSOCKET_INTERNAL
 
 	NETSOCKET_BUFFER buffer;
 };
-static NETSOCKET_INTERNAL invalid_socket = {NETTYPE_INVALID, -1, -1, -1};
 
 typedef struct NETSOCKET_INTERNAL *NETSOCKET;
 

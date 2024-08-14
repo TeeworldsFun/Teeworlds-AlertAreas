@@ -42,7 +42,7 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 	m_WaypointDir = vec2(0, 0);
 	// Player()->SetRandomSkin();
 
-	m_PowerLevel = 2;
+	m_PowerLevel = 10 + m_Level * 2;
 
 	m_StartPos = Player()->GetCharacter()->m_Pos;
 	m_TargetPos = Player()->GetCharacter()->m_Pos;
@@ -67,7 +67,6 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 		GiveWeapon(pChr, SHOTGUN_DOUBLEBARREL);
 		pChr->SetHealth(60 + min((m_Level - 1) * 4, 300));
 		pChr->SetArmor(60 + min((m_Level - 1) * 4, 300));
-		m_PowerLevel = 8;
 		m_TriggerLevel = 15 + rand() % 5;
 		break;
 
@@ -75,7 +74,6 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 		GiveWeapon(pChr, GRENADE_GRENADELAUNCHER);
 		pChr->SetHealth(60 + min((m_Level - 1) * 4, 300));
 		pChr->SetArmor(60 + min((m_Level - 1) * 4, 300));
-		m_PowerLevel = 8;
 		m_TriggerLevel = 15 + rand() % 5;
 		break;
 
@@ -83,7 +81,6 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 		GiveWeapon(pChr, GUN_MAGNUM);
 		pChr->SetHealth(60 + min((m_Level - 1) * 4, 200));
 		pChr->SetArmor(60 + min((m_Level - 1) * 4, 350));
-		m_PowerLevel = 12;
 		m_TriggerLevel = 15 + rand() % 5;
 		break;
 
@@ -91,7 +88,6 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 		GiveWeapon(pChr, GRENADE_DOOMLAUNCHER);
 		pChr->SetHealth(50 + min((m_Level - 1) * 4, 150));
 		pChr->SetArmor(60 + min((m_Level - 1) * 4, 300));
-		m_PowerLevel = 10;
 		m_TriggerLevel = 15 + rand() % 5;
 		break;
 
@@ -113,7 +109,6 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 		GiveWeapon(pChr, GRENADE_ELECTROLAUNCHER);
 
 		pChr->SetHealth(80 + min(m_Level * 4.0f, 320.0f));
-		m_PowerLevel = 12;
 		m_TriggerLevel = 15 + rand() % 5;
 		break;
 
@@ -124,7 +119,6 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 			GiveWeapon(pChr, RIFLE_HEAVYRIFLE);
 
 		pChr->SetHealth(80 + min(m_Level * 5.0f, 320.0f));
-		m_PowerLevel = 12;
 		m_TriggerLevel = 15 + rand() % 5;
 		break;
 
@@ -137,7 +131,6 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 		m_AttackOnDamage = true;
 
 		pChr->SetHealth(80 + min(m_Level * 5.0f, 320.0f));
-		m_PowerLevel = 14;
 		m_TriggerLevel = 15 + rand() % 5;
 		break;
 
@@ -145,7 +138,6 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 		GiveWeapon(pChr, GUN_TASER);
 
 		pChr->SetHealth(80 + min(m_Level * 5.0f, 320.0f));
-		m_PowerLevel = 12;
 		m_TriggerLevel = 15 + rand() % 5;
 		break;
 
@@ -173,30 +165,26 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 		break;
 
 	case SKIN_ROBO1:
-		m_PowerLevel = 6;
 		pChr->SetHealth(50 + min(m_Level * 3.0f, 100.0f));
 		pChr->SetArmor(50 + min(m_Level * 3.0f, 100.0f));
 		GiveWeapon(pChr, GRENADE_ELECTROLAUNCHER);
 		break;
 
 	case SKIN_ROBO2:
-		m_PowerLevel = 2;
 		pChr->SetHealth(100 + min(m_Level * 3.0f, 200.0f));
 		pChr->SetArmor(100 + min(m_Level * 3.0f, 200.0f));
 		GiveWeapon(pChr, SWORD_KATANA);
 		break;
 
 	case SKIN_ROBO3:
-		m_PowerLevel = 6;
 		pChr->SetHealth(100 + min(m_Level * 4.0f, 200.0f));
 		pChr->SetArmor(100 + min(m_Level * 4.0f, 300.0f));
-		GiveWeapon(pChr, GUN_TASER);
+		GiveWeapon(pChr, RIFLE_STORMRIFLE);
 		GiveWeapon(pChr, GRENADE_DOOMLAUNCHER);
 		pChr->m_Kits = 1;
 		break;
 
 	case SKIN_ROBO4:
-		m_PowerLevel = 10;
 		pChr->SetHealth(150 + min(m_Level * 5.0f, 200.0f));
 		pChr->SetArmor(150 + min(m_Level * 5.0f, 300.0f));
 		GiveWeapon(pChr, GRENADE_ELECTROLAUNCHER);
@@ -205,7 +193,6 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 		break;
 
 	case SKIN_ROBO5:
-		m_PowerLevel = 14;
 		pChr->SetHealth(150 + min(m_Level * 4.0f, 200.0f));
 		pChr->SetArmor(150 + min(m_Level * 4.0f, 300.0f));
 		GiveWeapon(pChr, SWORD_LIGHTNING);
@@ -242,9 +229,6 @@ void CAIinvasion::ReceiveDamage(int CID, int Dmg)
 {
 	if (CID >= 0 && frandom() < Dmg * 0.02f)
 		m_Triggered = true;
-
-	if (m_PowerLevel < 10)
-		m_Attack = 0;
 
 	if (m_AttackOnDamage)
 	{

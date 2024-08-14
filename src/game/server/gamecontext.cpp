@@ -872,8 +872,6 @@ void CGameContext::OnClientEnter(int ClientID)
 		}
 	}
 
-	SendChatTarget(-1, _("Cnm {%s}"), "Help");
-
 	m_VoteUpdate = true;
 }
 
@@ -989,157 +987,100 @@ void CGameContext::OnMessage(int MsgID, CUnpacker *pUnpacker, int ClientID)
 			pPlayer->m_LastChat = Server()->Tick();
 
 			// /help /weapon /smth
-			if (strcmp(pMsg->m_pMessage, "/help") == 0 || strcmp(pMsg->m_pMessage, "/info") == 0)
+			if (pMsg->m_pMessage[0] == '/')
 			{
-				SendChatTarget(ClientID, _("Engine version 1.54"));
-				SendChatTarget(ClientID, _(""));
-				SendChatTarget(ClientID, _("Use voting system to do shopping, /cmdlist for commands"));
-				SendChatTarget(ClientID, _("For updates and more info check teeworlds.com/forum"));
-				SkipSending = true;
-			}
-
-			// /help /weapon /smth
-			if (strcmp(pMsg->m_pMessage, "/cmdlist") == 0 || strcmp(pMsg->m_pMessage, "/cmd") == 0 || strcmp(pMsg->m_pMessage, "/commands") == 0)
-			{
-				SendChatTarget(ClientID, _("Commands:"));
-				SendChatTarget(ClientID, _("/dwc - Disable / enable weapon chat (Using: ...)"));
-				SendChatTarget(ClientID, _("/dwb - Disable / enable weapon broadcast"));
-				SendChatTarget(ClientID, _("/das - Disable / enable auto spectating"));
-				// SendChatTarget(ClientID, "/deg - Disable / enable throwing grenades with emoticons");
-				// SendChatTarget(ClientID, "/grenade - Throw a grenade");
-				SkipSending = true;
-			}
-
-			if (strcmp(pMsg->m_pMessage, "/buildtool") == 0)
-			{
-				if(pPlayer->GetCharacter())
-					pPlayer->GetCharacter()->GiveCustomWeapon(HAMMER_BUILD);
-			}
-
-			/*
-			if (strcmp(pMsg->m_pMessage, "/grenade") == 0)
-			{
-				if (pPlayer->GetCharacter())
-					pPlayer->GetCharacter()->ThrowGrenade();
-
-				SkipSending = true;
-			}
-			*/
-
-			if (strcmp(pMsg->m_pMessage, "/dwc") == 0)
-			{
-				if (pPlayer->m_EnableWeaponInfo == 1)
-					pPlayer->m_EnableWeaponInfo = 0;
-				else
-					pPlayer->m_EnableWeaponInfo = 1;
-
-				if (pPlayer->m_EnableWeaponInfo)
-					SendChatTarget(ClientID, _("Weapon chat info messages enabled"));
-				else
-					SendChatTarget(ClientID, _("Weapon chat info messages disabled"));
-
-				SkipSending = true;
-			}
-
-			if (strcmp(pMsg->m_pMessage, "/dwb") == 0)
-			{
-				if (pPlayer->m_EnableWeaponInfo == 2)
-					pPlayer->m_EnableWeaponInfo = 0;
-				else
-					pPlayer->m_EnableWeaponInfo = 2;
-
-				if (pPlayer->m_EnableWeaponInfo)
-					SendChatTarget(ClientID, _("Weapon broadcast info messages enabled"));
-				else
-					SendChatTarget(ClientID, _("Weapon broadcast info messages disabled"));
-
-				SkipSending = true;
-			}
-
-			if (strcmp(pMsg->m_pMessage, "/deg") == 0)
-			{
-				pPlayer->m_EnableEmoticonGrenades = !pPlayer->m_EnableEmoticonGrenades;
-				if (pPlayer->m_EnableEmoticonGrenades)
-					SendChatTarget(ClientID, _("Throwing grenades with emoticons enabled"));
-				else
-					SendChatTarget(ClientID, _("Throwing grenades with emoticons disabled"));
-
-				SkipSending = true;
-			}
-
-			if (strcmp(pMsg->m_pMessage, "/das") == 0)
-			{
-				pPlayer->m_EnableAutoSpectating = !pPlayer->m_EnableAutoSpectating;
-				if (pPlayer->m_EnableAutoSpectating)
-					SendChatTarget(ClientID, _("Auto spectating enabled"));
-				else
-					SendChatTarget(ClientID, _("Auto spectating disabled"));
-
-				SkipSending = true;
-			}
-
-			if (strcmp(pMsg->m_pMessage, "/showwaypoints") == 0)
-			{
-				m_ShowWaypoints = !m_ShowWaypoints;
-				SkipSending = true;
-			}
-
-			if (strcmp(pMsg->m_pMessage, "/addbot") == 0)
-			{
-				SendChatTarget(ClientID, "Adding bot...");
-				AddBot();
-
-				SkipSending = true;
-			}
-
-			if (!strncmp(pMsg->m_pMessage, "/timeout", 8))
-			{
-				char Timeout[256];
-				if(sscanf(pMsg->m_pMessage, "/timeout %s", Timeout) == 1)
-					str_copy(pPlayer->m_TimeoutID, Timeout, sizeof(pPlayer->m_TimeoutID));
-				
-				pPlayer->GetCharacter()->GiveStartWeapon();
-
-				SkipSending = true;
-			}
-
-			/*
-			if ( strcmp(pMsg->m_pMessage, "/addbots") == 0 )
-			{
-				SendChatTarget(ClientID, "Adding bots...");
-				for (int i = 0; i < 16; i++)
-					AddBot();
-
-				SkipSending = true;
-			}
-			*/
-
-			if (strcmp(pMsg->m_pMessage, "/kickbots") == 0)
-			{
-				SendChatTarget(ClientID, "Kicking bots...");
-				KickBots();
-
-				SkipSending = true;
-			}
-
-			/* disable shopping with chat commands
-			else
-			if ( strcmp(pMsg->m_pMessage, "/buy") == 0 || strcmp(pMsg->m_pMessage, "/shop") == 0 || strcmp(pMsg->m_pMessage, "/upg") == 0)
-			{
-				pPlayer->ListBuyableWeapons();
-				//SendToTeam = false;
-			}
-
-			for (int i = 0; i < NUM_CUSTOMWEAPONS; i++)
-			{
-				if ( strcmp(pMsg->m_pMessage, aCustomWeapon[i].m_BuyCmd) == 0)
+				if (str_comp(pMsg->m_pMessage, "/help") == 0 || str_comp(pMsg->m_pMessage, "/info") == 0)
 				{
-					pPlayer->BuyWeapon(i);
-					//SendToTeam = false;
-					break;
+					SendChatTarget(ClientID, _("Engine version 1.54"));
+					SendChatTarget(ClientID, _(""));
+					SendChatTarget(ClientID, _("Use voting system to do shopping, /cmdlist for commands"));
+					SendChatTarget(ClientID, _("For updates and more info check teeworlds.com/forum"));
 				}
+
+				else if (str_comp(pMsg->m_pMessage, "/cmdlist") == 0 || str_comp(pMsg->m_pMessage, "/cmd") == 0 || str_comp(pMsg->m_pMessage, "/commands") == 0)
+				{
+					SendChatTarget(ClientID, _("Commands:"));
+					SendChatTarget(ClientID, _("/dwc - Disable / enable weapon chat (Using: ...)"));
+					SendChatTarget(ClientID, _("/dwb - Disable / enable weapon broadcast"));
+					SendChatTarget(ClientID, _("/das - Disable / enable auto spectating"));
+					SendChatTarget(ClientID, "/deg - Disable / enable throwing grenades with emoticons");
+					SendChatTarget(ClientID, "/grenade - Throw a grenade");
+				}
+
+				else if (str_comp(pMsg->m_pMessage, "/buildtool") == 0)
+				{
+					if (pPlayer->GetCharacter())
+						pPlayer->GetCharacter()->GiveCustomWeapon(HAMMER_BUILD);
+				}
+
+				else if (str_comp(pMsg->m_pMessage, "/dwc") == 0)
+				{
+					if (pPlayer->m_EnableWeaponInfo == 1)
+						pPlayer->m_EnableWeaponInfo = 0;
+					else
+						pPlayer->m_EnableWeaponInfo = 1;
+
+					if (pPlayer->m_EnableWeaponInfo)
+						SendChatTarget(ClientID, _("Weapon chat info messages enabled"));
+					else
+						SendChatTarget(ClientID, _("Weapon chat info messages disabled"));
+				}
+
+				else if (str_comp(pMsg->m_pMessage, "/dwb") == 0)
+				{
+					if (pPlayer->m_EnableWeaponInfo == 2)
+						pPlayer->m_EnableWeaponInfo = 0;
+					else
+						pPlayer->m_EnableWeaponInfo = 2;
+
+					if (pPlayer->m_EnableWeaponInfo)
+						SendChatTarget(ClientID, _("Weapon broadcast info messages enabled"));
+					else
+						SendChatTarget(ClientID, _("Weapon broadcast info messages disabled"));
+				}
+
+				else if (str_comp(pMsg->m_pMessage, "/deg") == 0)
+				{
+					pPlayer->m_EnableEmoticonGrenades = !pPlayer->m_EnableEmoticonGrenades;
+					if (pPlayer->m_EnableEmoticonGrenades)
+						SendChatTarget(ClientID, _("Throwing grenades with emoticons enabled"));
+					else
+						SendChatTarget(ClientID, _("Throwing grenades with emoticons disabled"));
+				}
+
+				else if (str_comp(pMsg->m_pMessage, "/das") == 0)
+				{
+					pPlayer->m_EnableAutoSpectating = !pPlayer->m_EnableAutoSpectating;
+					if (pPlayer->m_EnableAutoSpectating)
+						SendChatTarget(ClientID, _("Auto spectating enabled"));
+					else
+						SendChatTarget(ClientID, _("Auto spectating disabled"));
+				}
+				else if (str_comp(pMsg->m_pMessage, "/showwaypoints") == 0)
+				{
+					m_ShowWaypoints = !m_ShowWaypoints;
+				}
+				else if (!str_comp_num(pMsg->m_pMessage, "/timeout", 8))
+				{
+					char Timeout[256];
+					if (sscanf(pMsg->m_pMessage, "/timeout %s", Timeout) == 1)
+						str_copy(pPlayer->m_TimeoutID, Timeout, sizeof(pPlayer->m_TimeoutID));
+
+					pPlayer->GetCharacter()->GiveStartWeapon();
+				}
+				else if (!str_comp_num(pMsg->m_pMessage, "/mc;timeout", 11))
+				{
+					char Timeout[1024];
+					char Useless[4];
+					if (sscanf(pMsg->m_pMessage, "/mc;timeout %s;%s", Timeout, Useless) == 1)
+						str_copy(pPlayer->m_TimeoutID, Timeout, sizeof(pPlayer->m_TimeoutID));
+
+					pPlayer->GetCharacter()->GiveStartWeapon();
+				}
+				else
+					SendChatTarget(ClientID, _("No Such Command."));
+				SkipSending = true;
 			}
-			*/
 
 			if (!SkipSending)
 			{
@@ -2220,19 +2161,10 @@ void CGameContext::OnInit(/*class IKernel *pKernel*/)
 		}
 	}
 
-	// game.world.insert_entity(game.Controller);
-
-	// SetupVotes(-1);
-
-	/*
-	CNetMsg_Sv_VoteClearOptions VoteClearOptionsMsg;
-	Server()->SendPackMsg(&VoteClearOptionsMsg, MSGFLAG_VITAL, -1);
-
-	m_pVoteOptionHeap->Reset();
-	m_pVoteOptionFirst = 0;
-	m_pVoteOptionLast = 0;
-	m_NumVoteOptions = 0;
-	*/
+	for (int i = 0; i < NUM_CUSTOMWEAPONS; i++)
+	{
+		dbg_msg("sdasda", aCustomWeapon[i].m_Name);
+	}
 }
 
 /*
@@ -2704,7 +2636,7 @@ void CGameContext::OnSetAuthed(int ClientID, int Level)
 		m_apPlayers[ClientID]->m_Authed = Level;
 }
 
-const char* CGameContext::Localize(const char *pLanguageCode, const char *pText)
+const char *CGameContext::Localize(const char *pLanguageCode, const char *pText)
 {
 	return Server()->Localization()->Localize(pLanguageCode, pText);
 }

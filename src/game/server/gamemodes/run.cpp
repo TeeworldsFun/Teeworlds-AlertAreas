@@ -21,7 +21,7 @@ CGameControllerCoop::CGameControllerCoop(class CGameContext *pGameServer)
 
 	m_BotSpawnTick = 0;
 
-	srand(g_Config.m_SvMapGenLevel + g_Config.m_SvMapGenSeed);
+	srand(Server()->Tick() % 132767);
 	if (g_Config.m_SvMapGenRandSeed)
 	{
 		g_Config.m_SvMapGenSeed = rand() % 32767;

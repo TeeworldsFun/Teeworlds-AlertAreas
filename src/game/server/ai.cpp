@@ -807,7 +807,7 @@ bool CAI::SeekRandomEnemy()
 		if (pPlayer == Player())
 			continue;
 		
-		if (pPlayer->GetTeam() == Player()->GetTeam() && GameServer()->m_pController->IsTeamplay())
+		if (pPlayer->m_IsBot)
 			continue;
 
 		CCharacter *pCharacter = pPlayer->GetCharacter();

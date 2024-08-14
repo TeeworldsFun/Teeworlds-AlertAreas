@@ -22,7 +22,7 @@
         },
         {
             "key": "KILL!",
-            "value": "他妈的都得死!"
+            "value": "都得死!!!"
         },
         {
             "key": "Run",
@@ -54,7 +54,7 @@
         },
         {
             "key": "Everybody dies",
-            "value": "死亡的氛围席卷上来"
+            "value": "无人生还"
         },
         {
             "key": "{%s} scores for blue team!",
@@ -154,7 +154,7 @@
         },
         {
             "key": "'{%s}' joined the fun",
-            "value": "'{%s}' 加入了F U N"
+            "value": "'{%s}' 加入了杀戮"
         },
         {
             "key": "Level {%d}",
@@ -174,7 +174,7 @@
         },
         {
             "key": "Wait for current vote to end before calling a new one.",
-            "value": "他妈的看不见有人还在投票呢啊，妈的等这个投票结束的，傻逼."
+            "value": "请等待当前投票结束"
         },
         {
             "key": "You must wait {%d} seconds before making another vote",
@@ -190,11 +190,11 @@
         },
         {
             "key": "You can't kick yourself",
-            "value": "你不能踢自己，傻逼"
+            "value": "你不能踢出自己"
         },
         {
             "key": "You can't kick admins",
-            "value": "你不能踢出管理员，傻X"
+            "value": "你不能踢出一个管理员"
         },
         {
             "key": "Server does not allow voting to move players to spectators",
@@ -242,7 +242,7 @@
         },
         {
             "key": "Level : {%d}",
-            "value": "第{%d}关"
+            "value": "第{%d}层"
         },
         {
             "key": "Fails : {%d}",
@@ -257,116 +257,176 @@
             "value": "还需防守{%d}波"
         },
         {
-            "key": "Teams have been balanced",
-            "value": "Teams have been balanced"
-        },
-        {
-            "key": "Teams were swapped",
-            "value": "Teams were swapped"
-        },
-        {
-            "key": "Vote aborted",
-            "value": "Vote aborted"
-        },
-        {
-            "key": "Vote passed",
-            "value": "Vote passed"
-        },
-        {
-            "key": "Vote failed",
-            "value": "Vote failed"
-        },
-        {
-            "key": "'{%s}' joined the fun",
-            "value": "'{%s}' joined the fun"
-        },
-        {
             "key": "Engine version 1.54",
-            "value": "Engine version 1.54"
+            "value": "引擎版本 1.54"
         },
         {
             "key": "Use voting system to do shopping, /cmdlist for commands",
-            "value": "Use voting system to do shopping, /cmdlist for commands"
+            "value": "输入/cmdlist查看指令列表"
         },
         {
             "key": "For updates and more info check teeworlds.com/forum",
-            "value": "For updates and more info check teeworlds.com/forum"
+            "value": "更多信息请访问QQ群：895105949"
         },
         {
             "key": "Commands:",
-            "value": "Commands:"
+            "value": "指令列表:"
         },
         {
             "key": "/dwc - Disable / enable weapon chat (Using: ...)",
-            "value": "/dwc - Disable / enable weapon chat (Using: ...)"
+            "value": "/dwc - 隐藏 / 开启武器消息提示 (当前武器: ...)"
         },
         {
             "key": "/dwb - Disable / enable weapon broadcast",
-            "value": "/dwb - Disable / enable weapon broadcast"
+            "value": "/dwb - 隐藏 / 开启武器广播提示"
         },
         {
             "key": "/das - Disable / enable auto spectating",
-            "value": "/das - Disable / enable auto spectating"
+            "value": "/das - 隐藏 / 开启玩家自动旁观"
         },
         {
             "key": "Weapon chat info messages enabled",
-            "value": "Weapon chat info messages enabled"
+            "value": "已开启武器消息提示"
         },
         {
             "key": "Weapon chat info messages disabled",
-            "value": "Weapon chat info messages disabled"
+            "value": "已隐藏武器拾取消息提示"
         },
         {
             "key": "Weapon broadcast info messages enabled",
-            "value": "Weapon broadcast info messages enabled"
+            "value": "已开启武器拾取广播提示"
         },
         {
             "key": "Weapon broadcast info messages disabled",
-            "value": "Weapon broadcast info messages disabled"
+            "value": "已隐藏武器拾取广播提示"
         },
         {
             "key": "Throwing grenades with emoticons enabled",
-            "value": "Throwing grenades with emoticons enabled"
+            "value": "使用表情投掷手榴弹已开启"
         },
         {
             "key": "Throwing grenades with emoticons disabled",
-            "value": "Throwing grenades with emoticons disabled"
+            "value": "使用表情投掷手榴弹已关闭"
         },
         {
             "key": "Auto spectating enabled",
-            "value": "Auto spectating enabled"
+            "value": "自动旁观已开启"
         },
         {
             "key": "Auto spectating disabled",
-            "value": "Auto spectating disabled"
+            "value": "自动旁观已关闭"
         },
         {
-            "key": "Teams were shuffled",
-            "value": "Teams were shuffled"
-        },
-        {
-            "key": "Teams were locked",
-            "value": "Teams were locked"
-        },
-        {
-            "key": "Teams were unlocked",
-            "value": "Teams were unlocked"
-        },
-        {
-            "key": "Using: %s",
-            "value": "Using: %s"
+            "key": "Using: {%s}",
+            "value": "当前武器: {%s}"
         },
         {
             "key": "Available weapons to buy:",
-            "value": "Available weapons to buy:"
+            "value": "可以购买的武器:"
         },
         {
             "key": "{%s} - {%s} - {%d} points",
-            "value": "{%s} - {%s} - {%d} points"
+            "value": "{%s} - {%s} - {%d} 点"
         },
         {
             "key": "You must be alive to do shopping",
-            "value": "You must be alive to do shopping"
+            "value": "你只能在活着的时候进行购买"
+        },
+        {
+            "key": "Hammer",
+            "value": "锤子"
+        },
+        {
+            "key": "Thunder Hammer",
+            "value": "雷神之锤"
+        },
+        {
+            "key": "Build Tool",
+            "value": "建造工具"
+        },
+        {
+            "key": "Katana",
+            "value": "忍者刀"
+        },
+        {
+            "key": "Storm sword",
+            "value": "风暴之刃"
+        },
+        {
+            "key": "Pistol",
+            "value": "小手枪"
+        },
+        {
+            "key": "Uzi",
+            "value": "Uzi冲锋枪"
+        },
+        {
+            "key": "Magnum .9000",
+            "value": "马格南9000手枪"
+        },
+        {
+            "key": "Taser",
+            "value": "电击枪"
+        },
+        {
+            "key": "Double barrel shotgun",
+            "value": "双管霰弹枪"
+        },
+        {
+            "key": "Combat shotgun",
+            "value": "连发霰弹枪"
+        },
+        {
+            "key": "Grenade launcher",
+            "value": "榴弹发射器"
+        },
+        {
+            "key": "Doom launcher",
+            "value": "毁灭榴弹发射器"
+        },
+        {
+            "key": "Electro launcher",
+            "value": "电磁脉冲发射器"
+        },
+        {
+            "key": "Assault rifle",
+            "value": "突击步枪"
+        },
+        {
+            "key": "Heavy assault rifle",
+            "value": "重型突击步枪"
+        },
+        {
+            "key": "Lightning rifle",
+            "value": "闪电步枪"
+        },
+        {
+            "key": "Storm rifle",
+            "value": "风暴战枪"
+        },
+        {
+            "key": "Laser rifle",
+            "value": "激光枪"
+        },
+        {
+            "key": "Electro rifle",
+            "value": "电磁脉冲激发器"
+        },
+        {
+            "key": "Doom ray",
+            "value": "毁灭光线"
+        },
+        {
+            "key": "Smoke grenade",
+            "value": "烟雾弹"
+        },
+        {
+            "key": "Picked up {%s}",
+            "value": "你捡起了 {%s}"
+        },
+        {
+            "key": "Picked up ammo for {%s}",
+            "value": "你捡到了{%s}的弹药"
         }
     ]
 }
