@@ -2094,19 +2094,12 @@ void CGameContext::OnInit(/*class IKernel *pKernel*/)
 	m_World.SetGameServer(this);
 	m_Events.SetGameServer(this);
 
-	// if(!data) // only load once
-	// data = load_data_from_memory(internal_data);
-
 	for (int i = 0; i < NUM_NETOBJTYPES; i++)
 		Server()->SnapSetStaticsize(i, m_NetObjHandler.GetObjSize(i));
 
 	m_Layers.Init(Kernel());
 	m_Collision.Init(&m_Layers);
 	m_MapGen.Init(&m_Layers, &m_Collision, m_pStorage); // MapGen
-
-	// reset everything here
-	// world = new GAMEWORLD;
-	// players = new CPlayer[MAX_CLIENTS];
 
 	// select gametype
 	if (str_comp(g_Config.m_SvGametype, "coop") == 0)
@@ -2133,19 +2126,9 @@ void CGameContext::OnInit(/*class IKernel *pKernel*/)
 		m_pServer->m_MapGenerated = true;
 	}
 
-	// setup core world
-	// for(int i = 0; i < MAX_CLIENTS; i++)
-	//	game.players[i].core.world = &game.world.core;
-
 	// create all entities from the game layer
 	CMapItemLayerTilemap *pTileMap = m_Layers.GameLayer();
 	CTile *pTiles = (CTile *)Kernel()->RequestInterface<IMap>()->GetData(pTileMap->m_Data);
-
-	/*
-	num_spawn_points[0] = 0;
-	num_spawn_points[1] = 0;
-	num_spawn_points[2] = 0;
-	*/
 
 	for (int y = 0; y < pTileMap->m_Height; y++)
 	{
@@ -2159,11 +2142,6 @@ void CGameContext::OnInit(/*class IKernel *pKernel*/)
 				m_pController->OnEntity(Index - ENTITY_OFFSET, Pos);
 			}
 		}
-	}
-
-	for (int i = 0; i < NUM_CUSTOMWEAPONS; i++)
-	{
-		dbg_msg("sdasda", aCustomWeapon[i].m_Name);
 	}
 }
 
