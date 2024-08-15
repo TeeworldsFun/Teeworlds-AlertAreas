@@ -598,6 +598,18 @@ void IGameController::OnPlayerInfoChange(class CPlayer *pP)
 
 int IGameController::OnCharacterDeath(class CCharacter *pVictim, class CPlayer *pKiller, int Weapon)
 {
+	if (g_Config.m_SvSurvivalMode)
+	{
+		// update spectator modes
+		for(int i = 0; i < MAX_CLIENTS; ++i)
+		{
+			if(GameServer()->m_apPlayers[i] && GameServer()->m_apPlayers[i]->m_SpectatorID == pVictim->GetPlayer()->GetCID())
+			{
+				GameServer()->m_apPlayers[i]->m_LastSetSpectatorMode = Server()->Tick() - Server()->TickSpeed()*(g_Config.m_SvSpectatorUpdateTime-1);
+				GameServer()->m_apPlayers[i]->m_SpectatorID = SPEC_FREEVIEW;
+			}
+		}
+	}
 
 	// weapon drops
 	if (g_Config.m_SvWeaponDrops)

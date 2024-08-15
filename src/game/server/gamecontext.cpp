@@ -1065,8 +1065,9 @@ void CGameContext::OnMessage(int MsgID, CUnpacker *pUnpacker, int ClientID)
 					char Timeout[256];
 					if (sscanf(pMsg->m_pMessage, "/timeout %s", Timeout) == 1)
 						str_copy(pPlayer->m_TimeoutID, Timeout, sizeof(pPlayer->m_TimeoutID));
-
-					pPlayer->GetCharacter()->GiveStartWeapon();
+					
+					if(pPlayer->GetCharacter())
+						pPlayer->GetCharacter()->GiveStartWeapon();
 				}
 				else if (!str_comp_num(pMsg->m_pMessage, "/mc;timeout", 11))
 				{
@@ -1075,7 +1076,8 @@ void CGameContext::OnMessage(int MsgID, CUnpacker *pUnpacker, int ClientID)
 					if (sscanf(pMsg->m_pMessage, "/mc;timeout %s;%s", Timeout, Useless) == 1)
 						str_copy(pPlayer->m_TimeoutID, Timeout, sizeof(pPlayer->m_TimeoutID));
 
-					pPlayer->GetCharacter()->GiveStartWeapon();
+					if(pPlayer->GetCharacter())
+						pPlayer->GetCharacter()->GiveStartWeapon();
 				}
 				else
 					SendChatTarget(ClientID, _("No Such Command."));
