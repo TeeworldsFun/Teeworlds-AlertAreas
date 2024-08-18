@@ -1347,7 +1347,7 @@ void CServer::CacheServerInfo(CCache *pCache, int Type, bool SendClients)
 	}
 	else
 	{
-		if(m_NetServer.MaxClients() <= MAX_PLAYERS)
+		if(m_NetServer.MaxClients() <= VANILLA_MAX_PLAYERS)
 		{
 			p.AddString(g_Config.m_SvName, 64);
 		}
@@ -1441,8 +1441,8 @@ void CServer::CacheServerInfo(CCache *pCache, int Type, bool SendClients)
 	{
 	case SERVERINFO_EXTENDED: Remaining = -1; break;
 	case SERVERINFO_64_LEGACY: Remaining = 24; break;
-	case SERVERINFO_VANILLA: Remaining = MAX_CLIENTS; break;
-	case SERVERINFO_INGAME: Remaining = MAX_CLIENTS; break;
+	case SERVERINFO_VANILLA: Remaining = MAX_PLAYERS; break;
+	case SERVERINFO_INGAME: Remaining = MAX_PLAYERS; break;
 	default: dbg_assert(0, "caught earlier, unreachable"); return;
 	}
 
@@ -1451,7 +1451,7 @@ void CServer::CacheServerInfo(CCache *pCache, int Type, bool SendClients)
 	// For legacy 64p, send 24 players per packet.
 	// For extended, send as much players as possible.
 
-	for(int i = 0; i < MAX_CLIENTS; i++)
+	for(int i = 0; i < MAX_PLAYERS; i++)
 	{
 		if(m_aClients[i].m_State != CClient::STATE_EMPTY)
 		{
@@ -1569,7 +1569,7 @@ void CServer::UpdateRegisterServerInfo()
 {
 	// count the players
 	int PlayerCount = 0, ClientCount = 0;
-	for(int i = 0; i < MAX_CLIENTS; i++)
+	for(int i = 0; i < MAX_PLAYERS; i++)
 	{
 		if(m_aClients[i].m_State != CClient::STATE_EMPTY)
 		{
@@ -1616,7 +1616,7 @@ void CServer::UpdateRegisterServerInfo()
 		EscapeJson(aVersion, sizeof(aVersion), GameServer()->Version()));
 
 	bool FirstPlayer = true;
-	for(int i = 0; i < MAX_CLIENTS; i++)
+	for(int i = 0; i < MAX_PLAYERS; i++)
 {
 		if(m_aClients[i].m_State != CClient::STATE_EMPTY)
 	{
@@ -1676,7 +1676,7 @@ void CServer::UpdateServerInfo(bool Resend)
 // called right after PumpNetwork()
 void CServer::UpdateAIInput()
 {
-	for (int i = 0; i < MAX_CLIENTS; i++)
+	for (int i = MAX_PLAYERS; i < MAX_CLIENTS; i++)
 	{
 		if(m_aClients[i].m_State == CClient::STATE_INGAME && m_aClients[i].m_Bot)
 		{
@@ -2376,7 +2376,7 @@ int main(int argc, const char **argv) // ignore_convention
 void CServer::AddZombie()
 {
 	int ClientID = -1;
-	for (int i = MAX_CLIENTS - 1; i > 0; i--)
+	for (int i = MAX_CLIENTS - 1; i > MAX_PLAYERS; i--)
 	{
 		if (m_aClients[i].m_State == CClient::STATE_EMPTY)
 		{
