@@ -207,12 +207,12 @@ const CWeapon aCustomWeapon[NUM_CUSTOMWEAPONS] =
 		),
 	CWeapon(
 		"Build Tool",
-		"/buy builder",
+		"/nobuilder",
 		WEAPON_HAMMER,
 		PROJTYPE_BUILD,
 		SOUND_HAMMER_FIRE,
 		-1, // require
-		75, // cost
+		99999999999, // cost
 		0, // damage
 		SMOKE, // extra1
 		true, // autofire
