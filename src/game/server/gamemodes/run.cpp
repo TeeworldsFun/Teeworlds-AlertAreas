@@ -12,6 +12,16 @@
 #include <game/server/playerdata.h>
 #include <game/server/ai.h>
 #include <game/server/ai/inv_ai.h>
+/*#include <game/server/ai/inv/robot1_ai.h>
+#include <game/server/ai/inv/robot2_ai.h>
+#include <game/server/ai/inv/alien1_ai.h>
+#include <game/server/ai/inv/alien2_ai.h>
+#include <game/server/ai/inv/bunny1_ai.h>
+#include <game/server/ai/inv/bunny2_ai.h>
+#include <game/server/ai/inv/pyro1_ai.h>
+#include <game/server/ai/inv/pyro2_ai.h>*/
+
+
 
 CGameControllerCoop::CGameControllerCoop(class CGameContext *pGameServer)
 	: IGameController(pGameServer)
@@ -197,15 +207,37 @@ void CGameControllerCoop::OnCharacterSpawn(CCharacter *pChr, bool RequestAI)
 			pChr->m_IsBot = true;
 
 			// todo: rewrite
-			pChr->GetPlayer()->m_pAI = new CAIinvasion(GameServer(), pChr->GetPlayer(), Level, m_Group);
-
+			/*switch (m_GroupType)
+			{
+				case GROUP_ALIENS: 
+					pChr->GetPlayer()->m_pAI = new CAIalien1(GameServer(), pChr->GetPlayer(), Level);
+					break;
+					
+				case GROUP_BUNNIES: 
+					pChr->GetPlayer()->m_pAI = new CAIbunny1(GameServer(), pChr->GetPlayer(), Level);
+					break;
+					
+				case GROUP_ROBOTS: 
+					pChr->GetPlayer()->m_pAI = new CAIrobot1(GameServer(), pChr->GetPlayer(), Level);
+					break;
+					
+				case GROUP_PYROS: 
+					pChr->GetPlayer()->m_pAI = new CAIpyro1(GameServer(), pChr->GetPlayer(), Level);
+					break;
+					
+				case GROUP_SKELETONS: 
+					pChr->GetPlayer()->m_pAI = new CAIpyro1(GameServer(), pChr->GetPlayer(), Level);
+					break;
+			};*/
+			pChr->GetPlayer()->m_pAI = new CAIinvasion(GameServer(), pChr->GetPlayer(), Level, m_GroupType);
+			
 			m_EnemyCount++;
 			Trigger(false);
 		}
-
+		
 		if (!Found)
 		{
-			pChr->GetPlayer()->m_pAI = new CAIinvasion(GameServer(), pChr->GetPlayer(), g_Config.m_SvMapGenLevel, 2);
+			pChr->GetPlayer()->m_pAI = new CAIinvasion(GameServer(), pChr->GetPlayer(), g_Config.m_SvMapGenLevel, m_GroupType);
 			pChr->GetPlayer()->m_ToBeKicked = true;
 			Trigger(false);
 		}

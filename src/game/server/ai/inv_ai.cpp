@@ -29,7 +29,7 @@ CAIinvasion::CAIinvasion(CGameContext *pGameServer, CPlayer *pPlayer, int Level,
 	pPlayer->SetRandomSkin();
 }
 
-void CAIinvasion::GiveWeapon(CCharacter *pChr, int W)
+void CAIinvasion::GiveCustomWeapon(CCharacter *pChr, int W)
 {
 	pChr->GiveCustomWeapon(W);
 	pChr->SetCustomWeapon(W);
@@ -51,41 +51,41 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 	{
 	case SKIN_ALIEN1:
 		if (frandom() < min(m_Level * 0.1f, 1.0f))
-			GiveWeapon(pChr, GUN_PISTOL);
+			GiveCustomWeapon(pChr, GUN_PISTOL);
 		else if (frandom() < min(m_Level * 0.1f, 1.0f))
-			GiveWeapon(pChr, GUN_UZI);
+			GiveCustomWeapon(pChr, GUN_UZI);
 
 		if (frandom() < 0.6f)
-			GiveWeapon(pChr, GUN_MAGNUM);
+			GiveCustomWeapon(pChr, GUN_MAGNUM);
 		else
-			GiveWeapon(pChr, GUN_TASER);
+			GiveCustomWeapon(pChr, GUN_TASER);
 
 		pChr->SetHealth(60 + min((m_Level - 1) * 3, 300));
 		break;
 
 	case SKIN_ALIEN2:
-		GiveWeapon(pChr, SHOTGUN_DOUBLEBARREL);
+		GiveCustomWeapon(pChr, SHOTGUN_DOUBLEBARREL);
 		pChr->SetHealth(60 + min((m_Level - 1) * 4, 300));
 		pChr->SetArmor(60 + min((m_Level - 1) * 4, 300));
 		m_TriggerLevel = 15 + rand() % 5;
 		break;
 
 	case SKIN_ALIEN3:
-		GiveWeapon(pChr, GRENADE_GRENADELAUNCHER);
+		GiveCustomWeapon(pChr, GRENADE_GRENADELAUNCHER);
 		pChr->SetHealth(60 + min((m_Level - 1) * 4, 300));
 		pChr->SetArmor(60 + min((m_Level - 1) * 4, 300));
 		m_TriggerLevel = 15 + rand() % 5;
 		break;
 
 	case SKIN_ALIEN4:
-		GiveWeapon(pChr, GUN_MAGNUM);
+		GiveCustomWeapon(pChr, GUN_MAGNUM);
 		pChr->SetHealth(60 + min((m_Level - 1) * 4, 200));
 		pChr->SetArmor(60 + min((m_Level - 1) * 4, 350));
 		m_TriggerLevel = 15 + rand() % 5;
 		break;
 
 	case SKIN_ALIEN5:
-		GiveWeapon(pChr, GRENADE_DOOMLAUNCHER);
+		GiveCustomWeapon(pChr, GRENADE_DOOMLAUNCHER);
 		pChr->SetHealth(50 + min((m_Level - 1) * 4, 150));
 		pChr->SetArmor(60 + min((m_Level - 1) * 4, 300));
 		m_TriggerLevel = 15 + rand() % 5;
@@ -93,20 +93,20 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 
 	case SKIN_BUNNY1:
 		if (frandom() < 0.5f)
-			GiveWeapon(pChr, GRENADE_GRENADELAUNCHER);
+			GiveCustomWeapon(pChr, GRENADE_GRENADELAUNCHER);
 		else
-			GiveWeapon(pChr, GRENADE_DOOMLAUNCHER);
+			GiveCustomWeapon(pChr, GRENADE_DOOMLAUNCHER);
 
 		pChr->SetHealth(40 + min(m_Level * 3.0f, 220.0f));
 		break;
 
 	case SKIN_BUNNY2:
 		if (frandom() < 0.5f)
-			GiveWeapon(pChr, GRENADE_GRENADELAUNCHER);
+			GiveCustomWeapon(pChr, GRENADE_GRENADELAUNCHER);
 		else
-			GiveWeapon(pChr, RIFLE_DOOMRAY);
+			GiveCustomWeapon(pChr, RIFLE_DOOMRAY);
 
-		GiveWeapon(pChr, GRENADE_ELECTROLAUNCHER);
+		GiveCustomWeapon(pChr, GRENADE_ELECTROLAUNCHER);
 
 		pChr->SetHealth(80 + min(m_Level * 4.0f, 320.0f));
 		m_TriggerLevel = 15 + rand() % 5;
@@ -114,9 +114,9 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 
 	case SKIN_BUNNY3:
 		if (frandom() < 0.5f)
-			GiveWeapon(pChr, GRENADE_GRENADELAUNCHER);
+			GiveCustomWeapon(pChr, GRENADE_GRENADELAUNCHER);
 		else
-			GiveWeapon(pChr, RIFLE_HEAVYRIFLE);
+			GiveCustomWeapon(pChr, RIFLE_HEAVYRIFLE);
 
 		pChr->SetHealth(80 + min(m_Level * 5.0f, 320.0f));
 		m_TriggerLevel = 15 + rand() % 5;
@@ -124,9 +124,9 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 
 	case SKIN_BUNNY4:
 		if (frandom() < 0.5f)
-			GiveWeapon(pChr, SWORD_KATANA);
+			GiveCustomWeapon(pChr, SWORD_KATANA);
 		else
-			GiveWeapon(pChr, SWORD_LIGHTNING);
+			GiveCustomWeapon(pChr, SWORD_LIGHTNING);
 
 		m_AttackOnDamage = true;
 
@@ -135,7 +135,7 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 		break;
 
 	case SKIN_FOXY1:
-		GiveWeapon(pChr, GUN_TASER);
+		GiveCustomWeapon(pChr, GUN_TASER);
 
 		pChr->SetHealth(80 + min(m_Level * 5.0f, 320.0f));
 		m_TriggerLevel = 15 + rand() % 5;
@@ -143,23 +143,23 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 
 	case SKIN_PYRO1:
 		if (frandom() < 0.5f)
-			GiveWeapon(pChr, SWORD_LIGHTNING);
+			GiveCustomWeapon(pChr, SWORD_LIGHTNING);
 		else
-			GiveWeapon(pChr, GUN_TASER);
+			GiveCustomWeapon(pChr, GUN_TASER);
 		break;
 	case SKIN_PYRO2:
 		if (frandom() < 0.35f)
-			GiveWeapon(pChr, HAMMER_THUNDER);
+			GiveCustomWeapon(pChr, HAMMER_THUNDER);
 		else
-			GiveWeapon(pChr, SHOTGUN_DOUBLEBARREL);
+			GiveCustomWeapon(pChr, SHOTGUN_DOUBLEBARREL);
 		break;
 
 	case SKIN_PYRO3:
 		if (frandom() < 0.35f)
-			GiveWeapon(pChr, RIFLE_DOOMRAY);
+			GiveCustomWeapon(pChr, RIFLE_DOOMRAY);
 		else
 		{
-			GiveWeapon(pChr, SHOTGUN_DOUBLEBARREL);
+			GiveCustomWeapon(pChr, SHOTGUN_DOUBLEBARREL);
 			m_AttackOnDamage = true;
 		}
 		break;
@@ -167,62 +167,63 @@ void CAIinvasion::OnCharacterSpawn(CCharacter *pChr)
 	case SKIN_ROBO1:
 		pChr->SetHealth(50 + min(m_Level * 3.0f, 100.0f));
 		pChr->SetArmor(50 + min(m_Level * 3.0f, 100.0f));
-		GiveWeapon(pChr, GRENADE_ELECTROLAUNCHER);
+		GiveCustomWeapon(pChr, GRENADE_ELECTROLAUNCHER);
 		break;
 
 	case SKIN_ROBO2:
 		pChr->SetHealth(100 + min(m_Level * 3.0f, 200.0f));
 		pChr->SetArmor(100 + min(m_Level * 3.0f, 200.0f));
-		GiveWeapon(pChr, SWORD_KATANA);
+		GiveCustomWeapon(pChr, SWORD_KATANA);
 		break;
 
 	case SKIN_ROBO3:
 		pChr->SetHealth(100 + min(m_Level * 4.0f, 200.0f));
 		pChr->SetArmor(100 + min(m_Level * 4.0f, 300.0f));
-		GiveWeapon(pChr, RIFLE_STORMRIFLE);
-		GiveWeapon(pChr, GRENADE_DOOMLAUNCHER);
+		GiveCustomWeapon(pChr, RIFLE_STORMRIFLE);
+		GiveCustomWeapon(pChr, GRENADE_DOOMLAUNCHER);
 		pChr->m_Kits = 1;
 		break;
 
 	case SKIN_ROBO4:
 		pChr->SetHealth(150 + min(m_Level * 5.0f, 200.0f));
 		pChr->SetArmor(150 + min(m_Level * 5.0f, 300.0f));
-		GiveWeapon(pChr, GRENADE_ELECTROLAUNCHER);
-		GiveWeapon(pChr, GRENADE_DOOMLAUNCHER);
+		GiveCustomWeapon(pChr, GRENADE_ELECTROLAUNCHER);
+		GiveCustomWeapon(pChr, GRENADE_DOOMLAUNCHER);
 		pChr->m_Kits = 1;
 		break;
 
 	case SKIN_ROBO5:
 		pChr->SetHealth(150 + min(m_Level * 4.0f, 200.0f));
 		pChr->SetArmor(150 + min(m_Level * 4.0f, 300.0f));
-		GiveWeapon(pChr, SWORD_LIGHTNING);
+		GiveCustomWeapon(pChr, SWORD_LIGHTNING);
 		m_AttackOnDamage = true;
 		break;
 
 	case SKIN_SKELETON1:
-		GiveWeapon(pChr, GRENADE_ELECTROLAUNCHER);
+		GiveCustomWeapon(pChr, GRENADE_ELECTROLAUNCHER);
 		break;
 
 	case SKIN_SKELETON2:
 		if (frandom() < 0.5f)
-			GiveWeapon(pChr, SWORD_KATANA);
+			GiveCustomWeapon(pChr, SWORD_KATANA);
 		else
-			GiveWeapon(pChr, SWORD_LIGHTNING);
+			GiveCustomWeapon(pChr, SWORD_LIGHTNING);
 		break;
 
 	case SKIN_SKELETON3:
 		if (frandom() < 0.5f)
-			GiveWeapon(pChr, GUN_UZI);
+			GiveCustomWeapon(pChr, GUN_UZI);
 		else
-			GiveWeapon(pChr, GRENADE_DOOMLAUNCHER);
+			GiveCustomWeapon(pChr, GRENADE_DOOMLAUNCHER);
 		break;
 
 	default:
 		break;
 	}
 
+	m_TriggerLevel = g_Config.m_SvBotLevel;
 	if (!m_Triggered)
-		m_ReactionTime = 100;
+		m_ReactionTime = g_Config.m_SvBotReactTime;
 }
 
 void CAIinvasion::ReceiveDamage(int CID, int Dmg)

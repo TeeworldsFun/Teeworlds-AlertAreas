@@ -12,7 +12,7 @@ public:
 	void OnCharacterSpawn(class CCharacter *pChr);
 	void ReceiveDamage(int CID, int Dmg);
 
-	void GiveWeapon(CCharacter *pChr, int W);
+	void GiveCustomWeapon(CCharacter *pChr, int W);
 
 private:
 	int m_SkipMoveUpdate;

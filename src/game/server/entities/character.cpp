@@ -1803,15 +1803,18 @@ bool CCharacter::TakeDamage(vec2 Force, int Dmg, int From, int Weapon, bool Life
 	if (GetPlayer()->GotAbility(HEAVYBODYARMOR))
 		Dmg--;
 
-	// signal AI
-	if (Dmg > 0 && GetPlayer()->m_pAI && Weapon >= 0)
-		GetPlayer()->m_pAI->ReceiveDamage(From, Dmg);
-
 	if (GameServer()->m_pController->IsFriendlyFire(m_pPlayer->GetCID(), From) && !g_Config.m_SvTeamdamage)
 		return false;
 
 	if (GameServer()->m_apPlayers[From] && !GetPlayer()->m_pAI && !GameServer()->m_apPlayers[From]->m_pAI && str_comp(g_Config.m_SvGametype, "coop") == 0)
 		return false;
+
+	if (GameServer()->m_apPlayers[From] && GetPlayer()->m_pAI && GameServer()->m_apPlayers[From]->m_pAI && str_comp(g_Config.m_SvGametype, "coop") == 0)
+		return false;
+
+	// signal AI
+	if (Dmg > 0 && GetPlayer()->m_pAI && Weapon >= 0)
+		GetPlayer()->m_pAI->ReceiveDamage(From, Dmg);
 
 	// m_pPlayer only inflicts half damage on self
 	if (From == m_pPlayer->GetCID())

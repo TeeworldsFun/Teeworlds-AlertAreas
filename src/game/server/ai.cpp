@@ -72,6 +72,11 @@ void CAI::Reset()
 	m_DontMoveTick = 0;
 	
 	m_OldTargetPos = vec2(0, 0);
+
+	m_MoveReactTime = 0;
+
+	m_AttackOnDamage = false;
+	m_AttackOnDamageTick = 0;
 	ClearEmotions();
 }
 

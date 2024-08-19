@@ -204,7 +204,7 @@ void CPickup::Tick()
 					}
 				}
 
-				/*if(pChr->GiveWeapon(m_Subtype, 10)) // !pChr->m_WeaponPicked &&
+				/*if(pChr->GiveCustomWeapon(m_Subtype, 10)) // !pChr->m_WeaponPicked &&
 				{
 					RespawnTime = g_pData->m_aPickups[m_Type].m_Respawntime;
 

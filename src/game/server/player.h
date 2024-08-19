@@ -305,6 +305,8 @@ public:
 
 	char m_TimeoutID[256];
 
+	void SetCustomSkin(int Type) { return; };
+
 private:
 	bool m_Spectate;
 

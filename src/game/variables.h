@@ -150,6 +150,8 @@ MACRO_CONFIG_STR(SvInvMap, sv_dont_use_j92zjhgsabkjznbdatka9j, 128, "", CFGFLAG_
 MACRO_CONFIG_INT(SvInvGroupLeft, sv_dont_use_j92213gyahjbd837tka9j, 0, 0, 9999999, CFGFLAG_SERVER, "Latest invasion map")
 MACRO_CONFIG_INT(SvInvELeft, sv_dont_use_j92tka9zi8ywhsadhi87yihvxmcnzj, 0, 0, 9999999, CFGFLAG_SERVER, "Latest invasion map")
 
+MACRO_CONFIG_INT(SvBotLevel, sv_bot_level, 40, 1, 9999, CFGFLAG_SERVER, "Bot level")
+
 // debug
 #ifdef CONF_DEBUG // this one can crash the server if not used correctly
 	MACRO_CONFIG_INT(DbgDummies, dbg_dummies, 0, 0, 15, CFGFLAG_SERVER, "")

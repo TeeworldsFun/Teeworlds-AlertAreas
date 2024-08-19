@@ -41,6 +41,11 @@ protected:
 	
 	bool m_EnemyInLine;
 
+	bool m_AttackOnDamage;
+	int m_AttackOnDamageTick;
+
+	int m_MoveReactTime;
+
 	// emotions
 	float m_aAnger[64]; // MAX_CLIENTS
 	float m_aAttachment[64]; // MAX_CLIENTS
